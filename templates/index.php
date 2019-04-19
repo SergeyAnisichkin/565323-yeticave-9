@@ -1,12 +1,4 @@
-<?php
-function format_cost($cost) {
-    $cost = ceil($cost);
-    if ($cost >= 1000) {
-        $cost = number_format($cost, 0, ',', ' ');
-    }
-    return $cost . " ₽";
-}
-?>
+
 <section class="promo">
     <h2 class="promo__title">Нужен стафф для катки?</h2>
     <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
@@ -40,8 +32,8 @@ function format_cost($cost) {
                             <span class="lot__amount">Стартовая цена</span>
                             <span class="lot__cost"><?=format_cost($lot['cost'])?></span>
                         </div>
-                        <div class="lot__timer timer">
-                            12:23
+                        <div class="lot__timer timer ">
+                            12:33
                         </div>
                     </div>
                 </div>

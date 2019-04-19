@@ -1,4 +1,8 @@
 <?php
+require_once "helpers.php";
+
+$is_auth = rand(0, 1);
+$user_name = 'Сергей';
 $categories = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
 $lots = [
     [
@@ -39,13 +43,25 @@ $lots = [
     ],
 ];
 
-require_once "helpers.php";
+function format_cost($cost) {
+    $cost = ceil($cost);
+    if ($cost >= 1000) {
+        $cost = number_format($cost, 0, ',', ' ');
+    }
+    return $cost . " ₽";
+}
 
-$page_content = include_template('index.php', ['lots' => $lots, 'categories' => $categories]);
+$page_content = include_template('index.php', [
+    'lots' => $lots,
+    'categories' => $categories
+]);
 
-$layout_content = include_template('layout.php',
-    ['content' => $page_content,
+$layout_content = include_template('layout.php', [
+    'content' => $page_content,
     'title' => "YetiCave - Главная",
-    'categories' => $categories]);
+    'categories' => $categories,
+    'is_auth' => $is_auth,
+    'user_name' => $user_name,
+]);
 
 print($layout_content);
