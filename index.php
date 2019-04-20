@@ -50,6 +50,12 @@ function format_cost($cost) {
     }
     return $cost . " ₽";
 }
+function calc_timer() {
+    $cur_date = date_create("now");
+    $next_mid = date_create("tomorrow midnight");
+    $diff = date_diff($cur_date, $next_mid);
+    return $diff;
+}
 
 $page_content = include_template('index.php', [
     'lots' => $lots,
