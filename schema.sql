@@ -3,8 +3,8 @@ USE yeticave;
 
 CREATE TABLE `categories` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(32) NOT NULL UNIQUE,
-    `code` VARCHAR(32) NOT NULL UNIQUE
+    `name` VARCHAR(128) NOT NULL UNIQUE,
+    `code` VARCHAR(128) NOT NULL UNIQUE
 ) ENGINE=InnoDB CHARACTER SET utf8;
 
 CREATE TABLE `users` (
@@ -12,14 +12,14 @@ CREATE TABLE `users` (
     `date_add` DATETIME NOT NULL,
     `email` VARCHAR(128) NOT NULL UNIQUE,
     `name` VARCHAR(128) NOT NULL,
-    `password` VARCHAR(64) NOT NULL,
+    `password` VARCHAR(128) NOT NULL,
     `avatar_url` VARCHAR(255),
     `contacts` VARCHAR(255)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 
 CREATE TABLE `lots` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(128) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
     `date_add` DATETIME NOT NULL,
     `date_completion` DATETIME,
     `description` VARCHAR(255),
