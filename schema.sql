@@ -3,27 +3,27 @@ USE yeticave;
 
 CREATE TABLE `categories` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` CHAR(32) NOT NULL UNIQUE,
-    `code` CHAR(32) NOT NULL UNIQUE
+    `name` VARCHAR(32) NOT NULL UNIQUE,
+    `code` VARCHAR(32) NOT NULL UNIQUE
 ) ENGINE=InnoDB CHARACTER SET utf8;
 
 CREATE TABLE `users` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `date_add` DATETIME NOT NULL,
-    `email` CHAR(128) NOT NULL UNIQUE,
-    `name` CHAR(128) NOT NULL,
-    `password` CHAR(64) NOT NULL,
-    `avatar_url` CHAR(255),
-    `contacts` CHAR(255)
+    `email` VARCHAR(128) NOT NULL UNIQUE,
+    `name` VARCHAR(128) NOT NULL,
+    `password` VARCHAR(64) NOT NULL,
+    `avatar_url` VARCHAR(255),
+    `contacts` VARCHAR(255)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 
 CREATE TABLE `lots` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` CHAR(128) NOT NULL,
+    `name` VARCHAR(128) NOT NULL,
     `date_add` DATETIME NOT NULL,
     `date_completion` DATETIME,
-    `description` CHAR(255),
-    `img_url` CHAR(128) NOT NULL,
+    `description` VARCHAR(255),
+    `img_url` VARCHAR(128) NOT NULL,
     `start_cost` INT NOT NULL,
     `step_bet` INT,
     `author_user_id` INT NOT NULL,
