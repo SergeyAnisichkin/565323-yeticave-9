@@ -33,7 +33,7 @@
                             <span class="lot__cost"><?=format_cost($lot['cost'])?></span>
                         </div>
                         <div class="lot__timer timer <?= (calc_timer()->h < 1) ? "timer--finishing" : "" ?>">
-                            <?= date_interval_format(calc_timer(), "%h:%i") ?>
+                            <?= date_interval_format(calc_timer(), "%H:%I") ?>
                         </div>
                     </div>
                 </div>
