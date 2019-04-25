@@ -19,7 +19,7 @@ CREATE TABLE `users` (
 
 CREATE TABLE `lots` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(255) NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
     `date_add` DATETIME NOT NULL,
     `date_completion` DATETIME,
     `description` VARCHAR(255),
