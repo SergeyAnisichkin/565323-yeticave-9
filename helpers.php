@@ -143,4 +143,17 @@ function include_template($name, array $data = []) {
     return $result;
 }
 
+function format_cost($cost) {
+    $cost = ceil($cost);
+    if ($cost >= 1000) {
+        $cost = number_format($cost, 0, ',', ' ');
+    }
+    return $cost . " ₽";
+}
+function calc_timer() {
+    $cur_date = date_create("now");
+    $next_mid = date_create("tomorrow midnight");
+    $diff = date_diff($cur_date, $next_mid);
+    return $diff;
+}
 
