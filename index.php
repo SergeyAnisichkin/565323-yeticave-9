@@ -1,35 +1,30 @@
 <?php
 require_once "helpers.php";
 
+$page_title = "YetiCave - Главная";
 $is_auth = rand(0, 1);
 $user_name = 'Сергей';
+$HOST = "localhost";
+$USER = "root";
+$PWD = "";
+$DB = "yeticave";
 
-function format_cost($cost) {
-    $cost = ceil($cost);
-    if ($cost >= 1000) {
-        $cost = number_format($cost, 0, ',', ' ');
-    }
-    return $cost . " ₽";
-}
-function calc_timer() {
-    $cur_date = date_create("now");
-    $next_mid = date_create("tomorrow midnight");
-    $diff = date_diff($cur_date, $next_mid);
-    return $diff;
-}
-
-$link = mysqli_connect("localhost", "root", "", "yeticave");
+$link = mysqli_connect($HOST, $USER, $PWD, $DB);
 if (!$link) {
     $layout_content = "Ошибка подключения. " . mysqli_connect_error();
-}
-else {
-    $sql = "SELECT name, code FROM categories";
+} else {
+    $sql = "SELECT c.name, c.code FROM categories AS c";
     $result = mysqli_query($link, $sql);
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    $sql = "SELECT l.title, l.img_url, l.start_cost, c.name AS category " .
-    "FROM lots AS l LEFT JOIN categories AS c " . 
-    "ON l.category_id = c.id WHERE l.winner_user_id IS NULL;";
+    $sql = "SELECT 
+                l.title, 
+                l.img_url, 
+                l.start_cost, 
+                c.name AS category 
+                FROM lots AS l 
+                LEFT JOIN categories AS c ON l.category_id = c.id 
+                WHERE l.winner_user_id IS NULL";
     $result = mysqli_query($link, $sql);
     $lots = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -40,7 +35,7 @@ else {
     
     $layout_content = include_template('layout.php', [
         'content' => $page_content,
-        'title' => "YetiCave - Главная",
+        'title' => $page_title,
         'categories' => $categories,
         'is_auth' => $is_auth,
         'user_name' => $user_name,
