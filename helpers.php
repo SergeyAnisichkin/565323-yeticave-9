@@ -150,10 +150,22 @@ function format_cost($cost) {
     }
     return $cost . " ₽";
 }
-function calc_timer() {
+function calc_timer($date_end) {
     $cur_date = date_create("now");
-    $next_mid = date_create("tomorrow midnight");
-    $diff = date_diff($cur_date, $next_mid);
-    return $diff;
+    $date_end = date_create($date_end);
+    return date_diff($cur_date, $date_end);
 }
+function calc_hour($date_end) {
+    $diff = calc_timer($date_end);
+    $d = $diff->d;
+    $h = $diff->h;
+    return $d * 24 + $h;
+}
+function format_timer($date_end) {
+    $diff = calc_timer($date_end);
+    $h_sum = calc_hour($date_end);
+    $h_sum < 10 ? $h_sum = "0" . $h_sum : $h_sum;
+    return $h_sum . date_interval_format($diff, ":%I:%S");
+}
+
 

@@ -1,26 +1,24 @@
 <?php
 require_once "helpers.php";
 
-$page_title = "YetiCave - Главная";
 $is_auth = rand(0, 1);
 $user_name = 'Сергей';
-$HOST = "localhost";
-$USER = "root";
-$PWD = "";
-$DB = "yeticave";
 
-$link = mysqli_connect($HOST, $USER, $PWD, $DB);
+$link = mysqli_connect("localhost", "root", "", "yeticave");
 if (!$link) {
     $layout_content = "Ошибка подключения. " . mysqli_connect_error();
-} else {
+}
+else {
     $sql = "SELECT c.name, c.code FROM categories AS c";
     $result = mysqli_query($link, $sql);
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     $sql = "SELECT 
+                l.id,
                 l.title, 
                 l.img_url, 
                 l.start_cost, 
+                l.date_end, 
                 c.name AS category 
                 FROM lots AS l 
                 LEFT JOIN categories AS c ON l.category_id = c.id 
@@ -35,7 +33,7 @@ if (!$link) {
     
     $layout_content = include_template('layout.php', [
         'content' => $page_content,
-        'title' => $page_title,
+        'title' => "YetiCave - Главная",
         'categories' => $categories,
         'is_auth' => $is_auth,
         'user_name' => $user_name,
