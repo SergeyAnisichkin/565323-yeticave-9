@@ -5,6 +5,7 @@ require_once "model.php";
 $page_title = "YetiCave";
 
 if ($link) {
+    $categories = getCategories($link);
     $lots = getOpenLots($link);
     $page_content = include_template('index.php', [
         'lots' => $lots,

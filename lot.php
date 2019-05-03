@@ -5,6 +5,7 @@ require_once "model.php";
 $page_title = "Лот";
 
 if ($link) {
+    $categories = getCategories($link);
     if (isIdExist($link, $_GET['id'])) {
         $lot = getLotById($link, $_GET['id']);
         $page_content = include_template('lot.php', [

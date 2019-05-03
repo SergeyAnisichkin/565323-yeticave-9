@@ -7,14 +7,16 @@ $PWD = "";
 $DB = "yeticave";
 
 $link = mysqli_connect($HOST, $USER, $PWD, $DB);
+mysqli_query($link,'SET CHARACTER SET utf8');
 if (!$link) {
     $layout_content = "Ошибка подключения. " . mysqli_connect_error();
-} else {
-    $sql = "SELECT c.name, c.code FROM categories AS c";
-    $result = mysqli_query($link, $sql);
-    $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
+function getCategories($link) {
+    $sql = "SELECT c.name, c.code FROM categories AS c";
+    $result = mysqli_query($link, $sql);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
 function getOpenLots($link) {
     $sql = "SELECT 
                 l.id,
