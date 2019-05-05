@@ -167,5 +167,13 @@ function format_timer($date_end) {
     $h_sum < 10 ? $h_sum = "0" . $h_sum : $h_sum;
     return $h_sum . date_interval_format($diff, ":%I:%S");
 }
-
+function isCostInvalid($cost) {
+    return !filter_var($cost, FILTER_VALIDATE_INT, 
+        array("options" => array("min_range" => 1)));
+}
+function isDateEndIncorrect($date_end) {
+    $cur_date = date_create("today");
+    $date_end = date_create($date_end);
+    return $date_end <= $cur_date;
+}
 
