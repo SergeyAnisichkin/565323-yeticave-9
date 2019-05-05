@@ -60,6 +60,7 @@ function getCategoryIdByName($link, $cat) {
 }
 function insertLotDB($link, $lot) {
     $category = getCategoryIdByName($link, $lot['category']);
+    $user_id = 1;
     $sql = "INSERT INTO lots (
                 date_add, 
                 author_user_id, 
@@ -70,8 +71,9 @@ function insertLotDB($link, $lot) {
                 img_url,
                 start_cost,
                 step_bet
-            ) VALUES (NOW(), 1, ?, ?, ?, ?, ?, ?, ?)";
+            ) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = db_get_prepare_stmt($link, $sql, [
+        $user_id, 
         $category['id'], 
         $lot['lot-date'], 
         $lot['lot-name'], 
@@ -80,6 +82,6 @@ function insertLotDB($link, $lot) {
         $lot['lot-rate'], 
         $lot['lot-step']
     ]);
-    $result = mysqli_stmt_execute($stmt);
-    return mysqli_insert_id($link) ?? false;
+    mysqli_stmt_execute($stmt);
+    return mysqli_insert_id($link);
 }
