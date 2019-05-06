@@ -85,3 +85,25 @@ function insertLotDB($link, $lot) {
     mysqli_stmt_execute($stmt);
     return mysqli_insert_id($link);
 }
+function isEmailExist($link, $email) {
+    $sql = "SELECT id, email FROM users WHERE email = '{$email}'";
+    $result = mysqli_query($link, $sql);
+    return $result->num_rows > 0 ?? false;
+}
+function insertUserDB($link, $sign_up) {
+    $sql = "INSERT INTO users (
+                date_add, 
+                email, 
+                users.name, 
+                users.password, 
+                contacts
+            ) VALUES (NOW(), ?, ?, ?, ?)";
+    $stmt = db_get_prepare_stmt($link, $sql, [
+        $sign_up['email'], 
+        $sign_up['name'], 
+        $sign_up['password'], 
+        $sign_up['message']
+    ]);
+    mysqli_stmt_execute($stmt);
+    return mysqli_insert_id($link);
+}
