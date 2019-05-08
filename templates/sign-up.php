@@ -9,51 +9,43 @@
         </ul>
     </nav>
     <form class="form container <?=!empty($errors) ? "form--invalid" : ""?>" 
-        action="sign-up.php" method="POST" autocomplete="off"> <!-- form--invalid -->
-        <h2>Регистрация нового аккаунта</h2>
-        <?php
-        $classname = isset($errors['email']) ? "form__item--invalid" : "";
-        $err_message = isset($errors['email']) ? $errors['email'] : "";
-        $value = isset($sign_up['email']) ? $sign_up['email'] : ""; 
+        action="sign-up.php" method="POST" autocomplete="off">
+        <?php 
+        $fields = ['email', 'password', 'name', 'message'];
+        foreach ($fields as $field) {
+            $errors[$field] = $errors[$field] ?? "";
+            $classname[$field] = $errors[$field] ? "form__item--invalid" : "";
+            $value[$field] = $sign_up[$field] ?? ""; 
+        }
         ?>
-        <div class="form__item <?=$classname?>">
+        <h2>Регистрация нового аккаунта</h2>
+        <?php $field = 'email'; ?>
+        <div class="form__item <?=$classname[$field]?>">
             <label for="email">E-mail <sup>*</sup></label>
             <input id="email" type="text" name="email" 
-                placeholder="Введите e-mail" value="<?=$value?>">
-            <span class="form__error"><?=$err_message?></span>
+                placeholder="Введите e-mail" value="<?=$value[$field]?>">
+            <span class="form__error"><?=$errors[$field]?></span>
         </div>
-        <?php
-        $classname = isset($errors['password']) ? "form__item--invalid" : "";
-        $err_message = isset($errors['password']) ? $errors['password'] : "";
-        $value = isset($sign_up['password']) ? $sign_up['password'] : ""; 
-        ?>
-        <div class="form__item <?=$classname?>">
+        <?php $field = 'password'; ?>
+        <div class="form__item <?=$classname[$field]?>">
             <label for="password">Пароль <sup>*</sup></label>
             <input id="password" type="password" name="password" 
-                placeholder="Введите пароль" value="<?=$value?>">
-            <span class="form__error"><?=$err_message?></span>
+                placeholder="Введите пароль" value="<?=$value[$field]?>">
+            <span class="form__error"><?=$errors[$field]?></span>
         </div>
-        <?php
-        $classname = isset($errors['name']) ? "form__item--invalid" : "";
-        $err_message = isset($errors['name']) ? $errors['name'] : "";
-        $value = isset($sign_up['name']) ? $sign_up['name'] : ""; 
-        ?>
-        <div class="form__item <?=$classname?>">
+        <?php $field = 'name'; ?>
+        <div class="form__item <?=$classname[$field]?>">
             <label for="name">Имя <sup>*</sup></label>
             <input id="name" type="text" name="name" 
-                placeholder="Введите имя" value="<?=$value?>">
-            <span class="form__error"><?=$err_message?></span>
+                placeholder="Введите имя" value="<?=$value[$field]?>">
+            <span class="form__error"><?=$errors[$field]?></span>
         </div>
-        <?php
-        $classname = isset($errors['message']) ? "form__item--invalid" : "";
-        $err_message = isset($errors['message']) ? $errors['message'] : "";
-        $value = isset($sign_up['message']) ? $sign_up['message'] : ""; 
-        ?>
-        <div class="form__item <?=$classname?>">
+        <?php $field = 'message'; ?>
+        <div class="form__item <?=$classname[$field]?>">
             <label for="message">Контактные данные <sup>*</sup></label>
             <textarea id="message" name="message" 
-                placeholder="Напишите как с вами связаться"><?=$value?></textarea>
-            <span class="form__error"><?=$err_message?></span>
+                placeholder="Напишите как с вами связаться"><?=$value[$field]?></textarea>
+            <span class="form__error"><?=$errors[$field]?></span>
         </div>
         <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
         <button type="submit" class="button">Зарегистрироваться</button>

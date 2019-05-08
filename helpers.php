@@ -176,4 +176,42 @@ function isDateEndIncorrect($date_end) {
     $date_end = date_create($date_end);
     return $date_end <= $cur_date;
 }
-
+function checkLotField($lot) {
+    $errors = [];
+    if ($lot['category'] == 'Выберите категорию') {
+        $errors['category'] = 'Выберите категорию';
+    }
+    if (isCostInvalid($lot['lot-rate'])) {
+        $errors['lot-rate'] = 'Введите начальную цену';
+    }
+    if (isCostInvalid($lot['lot-step'])) {
+        $errors['lot-step'] = 'Введите шаг ставки';
+    }
+    if (!is_date_valid($lot['lot-date'])) {
+        $errors['lot-date'] = 'Введите дату завершения торгов ГГГГ-ММ-ДД';
+    }
+    if (isDateEndIncorrect($lot['lot-date'])) {
+        $errors['lot-date'] = 'Введите дату завершения больше текущей даты';
+    }
+    foreach ($lot as $field => $value) {
+        if (empty($lot[$field])) {
+            $errors[$field] = 'Заполните это поле';
+        }
+    }
+    return $errors;
+}
+function checkSignField($link, $sign_up) {
+    $errors = [];
+    if (!filter_var($sign_up['email'], FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = 'Введите корректный Email';
+    }      
+    if (isEmailExist($link, $sign_up['email'])) {
+        $errors['email'] = 'Email существует, укажите другой';
+    }
+    foreach ($sign_up as $field => $value) {
+        if (empty($sign_up[$field])) {
+            $errors[$field] = 'Заполните это поле';
+        }
+    }
+    return $errors;
+}
