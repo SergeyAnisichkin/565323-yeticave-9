@@ -10,6 +10,7 @@ $link = mysqli_connect($HOST, $USER, $PWD, $DB);
 mysqli_query($link,'SET CHARACTER SET utf8');
 if (!$link) {
     $layout_content = "Ошибка подключения: " . mysqli_connect_error();
+    die();
 }
 
 function getCategories($link) {
@@ -33,8 +34,12 @@ function getOpenLots($link) {
 }
 function isIdExist($link, $id) {
     $id = intval($id);
-    $sql = "SELECT id FROM lots WHERE id = {$id}";
-    $result = mysqli_query($link, $sql);
+    $sql = "SELECT id FROM lots WHERE id = ?";
+    $stmt = db_get_prepare_stmt($link, $sql, [
+        $id, 
+    ]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
     return $result->num_rows > 0 ?? false;
 }
 function getLotById($link, $id) {
@@ -49,13 +54,22 @@ function getLotById($link, $id) {
         c.name AS category 
         FROM lots AS l 
         LEFT JOIN categories AS c ON l.category_id = c.id 
-        WHERE l.id = {$id}";
-    $result = mysqli_query($link, $sql);
+        WHERE l.id = ?";
+    $stmt = db_get_prepare_stmt($link, $sql, [
+        $id, 
+    ]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
     return mysqli_fetch_assoc($result);
 }
-function getCategoryIdByName($link, $cat) {
-    $sql = "SELECT c.id, c.name FROM categories AS c WHERE c.name = '{$cat}'";
-    $result = mysqli_query($link, $sql);
+function getCategoryIdByName($link, $category) {
+    $sql = "SELECT c.id, c.name FROM categories AS c 
+                WHERE c.name = ?";
+    $stmt = db_get_prepare_stmt($link, $sql, [
+        $category, 
+    ]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
     return mysqli_fetch_assoc($result);
 }
 function insertLotDB($link, $lot) {
@@ -81,6 +95,31 @@ function insertLotDB($link, $lot) {
         $lot['path'], 
         $lot['lot-rate'], 
         $lot['lot-step']
+    ]);
+    mysqli_stmt_execute($stmt);
+    return mysqli_insert_id($link);
+}
+function isEmailExist($link, $email) {
+    $sql = "SELECT id, email FROM users WHERE email = ?";
+    $stmt = db_get_prepare_stmt($link, $sql, [
+        $email, 
+    ]);
+    mysqli_stmt_execute($stmt);
+    return mysqli_stmt_fetch($stmt);
+}
+function insertUserDB($link, $sign_up) {
+    $sql = "INSERT INTO users (
+                date_add, 
+                email, 
+                users.name, 
+                users.password, 
+                contacts
+            ) VALUES (NOW(), ?, ?, ?, ?)";
+    $stmt = db_get_prepare_stmt($link, $sql, [
+        $sign_up['email'], 
+        $sign_up['name'], 
+        $sign_up['password'], 
+        $sign_up['message']
     ]);
     mysqli_stmt_execute($stmt);
     return mysqli_insert_id($link);
