@@ -24,13 +24,13 @@
             <div class="form__item <?=$classname[$field]?>">
                 <label for="lot-name">Наименование <sup>*</sup></label>
                 <input id="lot-name" type="text" name="lot-name" 
-                    placeholder="Введите наименование лота" value="<?=$lot[$field]?>">
+                    placeholder="Введите наименование лота" value="<?=$value[$field]?>">
                 <span class="form__error"><?=$errors[$field]?></span>
             </div>
             <?php $field = 'category'; ?>
             <div class="form__item <?=$classname[$field]?>">
                 <label for="category">Категория <sup>*</sup></label>
-                <select id="category" name="category" value="<?=$lot[$field]?>">
+                <select id="category" name="category" value="<?=$value[$field]?>">
                     <option>Выберите категорию</option>
                     <?php foreach ($categories as $cat): ?>
                     <option <?=$lot[$field] == $cat['name'] ? "selected" : ""?>>
@@ -45,7 +45,7 @@
         <div class="form__item form__item--wide <?=$classname[$field]?>">
             <label for="message">Описание <sup>*</sup></label>
             <textarea id="message" name="message" 
-                placeholder="Напишите описание лота"><?=$lot[$field]?></textarea>
+                placeholder="Напишите описание лота"><?=$value[$field]?></textarea>
             <span class="form__error"><?=$errors[$field]?></span>
         </div>
         <?php $field = 'file'; ?>
@@ -63,19 +63,19 @@
             <?php $field = 'lot-rate'; ?>
             <div class="form__item form__item--small <?=$classname[$field]?>">
                 <label for="lot-rate">Начальная цена <sup>*</sup></label>
-                <input id="lot-rate" type="text" name="lot-rate" placeholder="0" value="<?=$lot[$field]?>">
+                <input id="lot-rate" type="text" name="lot-rate" placeholder="0" value="<?=$value[$field]?>">
                 <span class="form__error"><?=$errors[$field]?></span>
             </div>
             <?php $field = 'lot-step'; ?>
             <div class="form__item form__item--small <?=$classname[$field]?>">
                 <label for="lot-step">Шаг ставки <sup>*</sup></label>
-                <input id="lot-step" type="text" name="lot-step" placeholder="0" value="<?=$lot[$field]?>">
+                <input id="lot-step" type="text" name="lot-step" placeholder="0" value="<?=$value[$field]?>">
                 <span class="form__error"><?=$errors[$field]?></span>
             </div>
             <?php $field = 'lot-date'; ?>
             <div class="form__item <?=$classname[$field]?>">
                 <label for="lot-date">Дата окончания торгов <sup>*</sup></label>
-                <input class="form__input-date" id="lot-date" value="<?=$lot[$field]?>"
+                <input class="form__input-date" id="lot-date" value="<?=$value[$field]?>"
                     type="text" name="lot-date" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
                 <span class="form__error"><?=$errors[$field]?></span>
             </div>
