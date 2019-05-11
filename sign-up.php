@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ]);
     } else {
         insertUserDB($link, $sign_up);
-        header("Location: pages\login.html");
+        header("Location: login.php");
     }
 } else {
     $page_content = include_template('sign-up.php', [
@@ -32,8 +32,6 @@ $layout_content = include_template('layout.php', [
     'content' => $page_content,
     'title' => $page_title,
     'categories' => $categories,
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
 ]);
 
 

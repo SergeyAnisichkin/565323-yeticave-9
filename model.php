@@ -1,6 +1,5 @@
 <?php
-$is_auth = rand(0, 1);
-$user_name = 'Сергей';
+session_start();
 $HOST = "localhost";
 $USER = "root";
 $PWD = "";
@@ -118,7 +117,7 @@ function insertUserDB($link, $sign_up) {
     $stmt = db_get_prepare_stmt($link, $sql, [
         $sign_up['email'], 
         $sign_up['name'], 
-        $sign_up['password'], 
+        password_hash($sign_up['password'], PASSWORD_DEFAULT), 
         $sign_up['message']
     ]);
     mysqli_stmt_execute($stmt);
