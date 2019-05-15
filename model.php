@@ -43,17 +43,17 @@ function isIdExist($link, $id) {
 }
 function getLotById($link, $id) {
     $sql = "SELECT 
-        l.id,
-        l.title, 
-        l.img_url, 
-        l.start_cost, 
-        l.step_bet, 
-        l.date_end, 
-        l.description,
-        c.name AS category 
-        FROM lots AS l 
-        LEFT JOIN categories AS c ON l.category_id = c.id 
-        WHERE l.id = ?";
+            l.id,
+            l.title, 
+            l.img_url, 
+            l.start_cost, 
+            l.step_bet, 
+            l.date_end, 
+            l.description,
+            c.name AS category 
+            FROM lots AS l 
+            LEFT JOIN categories AS c ON l.category_id = c.id 
+            WHERE l.id = ?";
     $stmt = db_get_prepare_stmt($link, $sql, [
         $id, 
     ]);
@@ -122,4 +122,66 @@ function insertUserDB($link, $sign_up) {
     ]);
     mysqli_stmt_execute($stmt);
     return mysqli_insert_id($link);
+}
+function getCostFromBets($link, $lot_id) {
+    $sql = "SELECT MAX(cost) AS cost FROM bets 
+                WHERE lot_id = ?";
+    $stmt = db_get_prepare_stmt($link, $sql, [
+        $lot_id, 
+    ]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $array = $result ? mysqli_fetch_assoc($result) : null;
+    return $array['cost'] ?? null;
+}
+function getBets($link, $lot_id) {
+    $sql = "SELECT 
+            b.date_add,
+            b.cost, 
+            u.name 
+            FROM bets AS b 
+            LEFT JOIN users AS u ON b.user_id = u.id 
+            WHERE b.lot_id = ? ";
+    $stmt = db_get_prepare_stmt($link, $sql, [
+        $lot_id, 
+    ]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : null;
+}
+function insertBet($link, $user_id, $lot_id, $bet_cost) {
+    $sql = "INSERT INTO bets (
+                date_add, 
+                cost, 
+                user_id, 
+                lot_id
+            ) VALUES (NOW(), ?, ?, ?)";
+    $stmt = db_get_prepare_stmt($link, $sql, [
+        $bet_cost, 
+        $user_id, 
+        $lot_id
+    ]);
+    mysqli_stmt_execute($stmt);
+    return mysqli_insert_id($link);
+}
+
+function getUserBets($link, $user_id) {
+    $sql = "SELECT 
+            b.date_add,
+            b.cost, 
+            l.title,
+            l.id,
+            l.img_url,
+            l.date_end,
+            c.name
+            FROM bets AS b 
+            LEFT JOIN lots AS l ON b.lot_id = l.id
+            LEFT JOIN categories AS c ON l.category_id = c.id 
+            WHERE b.user_id = ? ";
+    $stmt = db_get_prepare_stmt($link, $sql, [
+        $user_id, 
+    ]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : null;
 }

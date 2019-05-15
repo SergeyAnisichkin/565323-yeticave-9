@@ -148,7 +148,7 @@ function format_cost($cost) {
     if ($cost >= 1000) {
         $cost = number_format($cost, 0, ',', ' ');
     }
-    return $cost . " ₽";
+    return $cost;
 }
 function calc_timer($date_end) {
     $cur_date = date_create("now");
@@ -165,7 +165,7 @@ function format_timer($date_end) {
     $diff = calc_timer($date_end);
     $h_sum = calc_hour($date_end);
     $h_sum < 10 ? $h_sum = "0" . $h_sum : $h_sum;
-    return $h_sum . date_interval_format($diff, ":%I:%S");
+    return $h_sum . date_interval_format($diff, ":%I");
 }
 function isCostInvalid($cost) {
     return !filter_var($cost, FILTER_VALIDATE_INT, 
@@ -214,4 +214,8 @@ function checkSignField($link, $sign_up) {
         }
     }
     return $errors;
+}
+function formatDateBet($date) {
+    $date = date_create($date);
+    return date_format($date, "m.d.y в G:i");
 }
