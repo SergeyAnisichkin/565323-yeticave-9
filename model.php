@@ -164,7 +164,6 @@ function insertBet($link, $user_id, $lot_id, $bet_cost) {
     mysqli_stmt_execute($stmt);
     return mysqli_insert_id($link);
 }
-
 function getUserBets($link, $user_id) {
     $sql = "SELECT 
             b.date_add,
@@ -180,6 +179,24 @@ function getUserBets($link, $user_id) {
             WHERE b.user_id = ? ";
     $stmt = db_get_prepare_stmt($link, $sql, [
         $user_id, 
+    ]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : null;
+}
+function getLotBySearch($link, $find) {
+    $sql = "SELECT 
+            l.title,
+            l.id,
+            l.img_url,
+            l.date_end,
+            l.start_cost,
+            c.name AS category
+            FROM lots AS l 
+            LEFT JOIN categories AS c ON l.category_id = c.id 
+            WHERE MATCH(title, description) AGAINST( ? )";
+    $stmt = db_get_prepare_stmt($link, $sql, [
+        $find, 
     ]);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
