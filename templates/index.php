@@ -4,9 +4,9 @@
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
-            <?php foreach ($categories as $category): ?>
-                <li class="promo__item promo__item--<?=$category['code']?>">
-                    <a class="promo__link" href="pages/all-lots.html"><?=$category['name']?></a>
+            <?php foreach ($categories as $cat): ?>
+                <li class="promo__item promo__item--<?=$cat['code']?>">
+                    <a class="promo__link" href="lots-category.php?id=<?=$cat['id']?>"><?=$cat['name']?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -28,8 +28,8 @@
                         </h3>
                         <div class="lot__state">
                             <div class="lot__rate">
-                                <span class="lot__amount">Стартовая цена</span>
-                                <span class="lot__cost"><?=format_cost($lot['start_cost'])?><b class="rub"> р</b></span>
+                                <span class="lot__amount"><?=$lot['bets']?></span>
+                                <span class="lot__cost"><?=format_cost($lot['cost'])?><b class="rub"> р</b></span>
                             </div>
                             <div class="lot-item__timer timer <?=calc_hour($lot['date_end']) < 1 ? "timer--finishing" : ""?>">
                                 <?=format_timer($lot['date_end'])?>

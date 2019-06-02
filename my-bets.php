@@ -1,6 +1,5 @@
 <?php
 require_once "helpers.php";
-require_once "model.php";
 
 if (!isset($_SESSION['user'])) {
     header('HTTP/1.0 403 Forbidden');
@@ -14,6 +13,7 @@ $bets = getUserBets($link, $_SESSION['user']['id']);
 $page_content = include_template('my-bets.php', [
     'bets' => $bets,
     'categories' => $categories,
+    'link' => $link,
 ]);
 
 $layout_content = include_template('layout.php', [
