@@ -1,19 +1,19 @@
 <main>
     <nav class="nav">
         <ul class="nav__list container">
-            <?php foreach ($categories as $cat): ?>
-                <li class="nav__item">
-                    <a href="lots-category.php?id=<?=$cat['id']?>"><?=$cat['name']?></a>
-                </li>
-            <?php endforeach; ?>
+        <?php foreach ($categories as $cat): ?>
+            <li class="nav__item <?=$cat['name'] == $category_name ? "nav__item--current" : ""?>">
+                <a href="lots-category.php?id=<?=$cat['id']?>"><?=$cat['name']?></a>
+            </li>
+        <?php endforeach; ?>
         </ul>
     </nav>
     <div class="container">
         <section class="lots">
-            <h2>Результаты поиска по запросу «<span><?=$find ?? ""?></span>»</h2>
-            <?php if (count($lots)) : ?>
+            <h2>Все лоты в категории <span>«<?=$category_name ?? ""?>»</span></h2>
+            <?php if (count($lots_category)) : ?>
             <ul class="lots__list">
-            <?php foreach ($lots as $lot): ?>
+            <?php foreach ($lots_category as $lot): ?>
                 <li class="lots__item lot">
                     <div class="lot__image">
                         <img src="<?=$lot['img_url']?>" width="350" height="260" alt="Фото лота">
@@ -44,20 +44,22 @@
         <ul class="pagination-list">
             <?php if ($page_number !== 1) : ?>
             <li class="pagination-item pagination-item-prev">
-                <a href="search.php?search=<?=$find?>&page=<?=$page_number - 1?>">Назад</a>
+                <a href="lots-category.php?id=<?=$cat_id?>&page=<?=$page_number - 1?>">Назад</a>
             </li>
             <?php endif; ?>
             <?php for($i = 1; $i <= $count_pages; $i++):?>
             <li class="pagination-item <?=$page_number == $i ? "pagination-item-active" : ""?>">
-                <a href="search.php?search=<?=$find?>&page=<?=$i?>"><?=$i?></a>
+                <a href="lots-category.php?id=<?=$cat_id?>&page=<?=$i?>"><?=$i?></a>
             </li>
             <?php endfor; ?>
             <?php if ($count_pages > $page_number) : ?>
             <li class="pagination-item pagination-item-next">
-                <a href="search.php?search=<?=$find?>&page=<?=$page_number + 1?>">Вперед</a>
+                <a href="lots-category.php?id=<?=$cat_id?>&page=<?=$page_number + 1?>">Вперед</a>
             </li>
             <?php endif; ?>
         </ul>
         <?php endif; ?>
     </div>
 </main>
+
+</div>

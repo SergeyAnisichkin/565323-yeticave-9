@@ -1,6 +1,5 @@
 <?php
 require_once "helpers.php";
-require_once "model.php";
 
 $page_title = "Регистрация";
 $categories = getCategories($link);

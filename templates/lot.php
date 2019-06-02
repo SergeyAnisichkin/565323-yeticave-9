@@ -3,7 +3,7 @@
         <ul class="nav__list container">
             <?php foreach ($categories as $cat): ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"><?=$cat['name']?></a>
+                    <a href="lots-category.php?id=<?=$cat['id']?>"><?=$cat['name']?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -32,7 +32,8 @@
                           Мин. ставка <span><?=format_cost($lot['bet_min']) . ' р'?></span>
                         </div>
                     </div>
-                    <?php if (isset($_SESSION['user'])) : 
+                    <?php 
+                    if ($display_form_bet) : 
                     $_SESSION['lot']['id'] = $lot['id'];
                     $_SESSION['lot']['bet_min'] = $lot['bet_min'];
                     ?>
@@ -44,8 +45,9 @@
                         </p>
                         <button type="submit" class="button">Сделать ставку</button>
                     </form>
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
+                
                 <div class="history">
                     <h3>История ставок (<span><?=count($bets_lot)?></span>)</h3>
                     <?php if (count($bets_lot)) : ?>
