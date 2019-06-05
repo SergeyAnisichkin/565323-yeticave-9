@@ -1,9 +1,8 @@
 <?php
 require_once "helpers.php";
-require_once "model.php";
 
 $page_content = '';
-$page_title = "Вход";
+$page_title = "Вход на сайт";
 $login = [];
 $errors = [];
 $categories = getCategories($link);
@@ -16,14 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errors[$field] = 'Заполните это поле';
         }
     }
-    
-    $sql = "SELECT * FROM users WHERE email = ?";
-    $stmt = db_get_prepare_stmt($link, $sql, [
-        $login['email'], 
-    ]);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $user = $result ? mysqli_fetch_assoc($result) : null;
+    $user =  getUserByEmail($link, $login['email']);
     if ($user) {
         if (!password_verify($login['password'], $user['password'])) {
             $errors['password'] = 'Неверный пароль';
