@@ -1,9 +1,9 @@
 <main>
     <nav class="nav">
         <ul class="nav__list container">
-            <?php foreach ($categories as $category): ?>
+            <?php foreach ($categories as $cat): ?>
                 <li class="nav__item">
-                    <a href="lots-category.php?id=<?=$cat['id']?>"><?=$category['name']?></a>
+                    <a href="lots-category.php?id=<?=$cat['id']?>"><?=$cat['name']?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -15,7 +15,7 @@
         foreach ($fields as $field) {
             $errors[$field] = $errors[$field] ?? "";
             $classname[$field] = $errors[$field] ? "form__item--invalid" : "";
-            $value[$field] = $sign_up[$field] ?? ""; 
+            $value[$field] = $lot[$field] ?? ""; 
         }
         ?>
         <h2>Добавление лота</h2>
@@ -33,7 +33,7 @@
                 <select id="category" name="category" value="<?=$value[$field]?>">
                     <option>Выберите категорию</option>
                     <?php foreach ($categories as $cat): ?>
-                    <option <?=$lot[$field] == $cat['name'] ? "selected" : ""?>>
+                    <option <?=$value[$field] === $cat['name'] ? "selected" : ""?>>
                         <?=$cat['name']?>
                     </option>
                     <?php endforeach; ?>

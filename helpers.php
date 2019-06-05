@@ -755,9 +755,9 @@ function getLotBySearch($link, $find, $page_number, $page_limit) {
  * @return
  */
 function sendMailWin($email, $body) {
-    $transport = new Swift_SmtpTransport('phpdemo.ru', 45);
-    $transport->setUsername('keks@phpdemo.ru');
-    $transport->setPassword('htmlacademy');
+    $transport = new Swift_SmtpTransport('smtp.mailtrap.io', 2525);
+    $transport->setUsername('727062f697d47a');
+    $transport->setPassword('0890b3c3c1954f');
   
     $message = new Swift_Message("Ваша ставка победила");
     $message->setTo($email);

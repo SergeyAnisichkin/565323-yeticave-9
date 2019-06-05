@@ -4,6 +4,7 @@ require_once "helpers.php";
 $page_title = "Результаты поиска";
 $page_number = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $page_number = $page_number > 0 ? $page_number : 1;
+$count_pages = 1;
 $page_limit = 9;
 
 $categories = getCategories($link);
